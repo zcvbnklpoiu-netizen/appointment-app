@@ -1,4 +1,3 @@
-
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,7 +14,6 @@ const doctorsData = {
     availability: 'Mon - Thu (8:00 AM - 4:00 PM)',
     consultationType: 'In-Person & Surgical Consults',
 
-    // Contact information
     contact: {
       phone: '+201000000001',
       email: 'james.anderson@example.com',
@@ -1133,9 +1131,14 @@ const doctorsData = {
   },
 };
 
+export function generateStaticParams() {
+  return Object.keys(doctorsData).map((id) => ({
+    id,
+  }));
+}
+
 export default async function DoctorPortfolioPage({ params }) {
-  const resolvedParams = await params;
-  const { id } = resolvedParams;
+  const { id } = await params;
 
   const doctor = doctorsData[id];
 
@@ -1245,15 +1248,14 @@ export default async function DoctorPortfolioPage({ params }) {
 
               </div>
 
-              {/* HERO BUTTONS */}
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
 
-                <a
-                  href="#book-appointment"
+                <Link
+                  href={`/appointment?doctor=${doctor.id}`}
                   className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-all shadow-md text-center"
                 >
                   Book Appointment
-                </a>
+                </Link>
 
                 <a
                   href={`mailto:${doctor.contact.email}`}
@@ -1581,20 +1583,19 @@ export default async function DoctorPortfolioPage({ params }) {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
 
-    <Link
-  href={`/appointment?doctor=${doctor.id}`}
-  className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-all shadow-md text-center"
->
-  Book Appointment
-</Link>
-
-            {/* Contact */}
             <Link
+              href={`/appointment?doctor=${doctor.id}`}
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white text-blue-600 font-semibold hover:bg-blue-50 transition-all shadow-md text-center"
+            >
+              Book Appointment
+            </Link>
+
+            <a
               href={`tel:${doctor.contact.phone}`}
               className="w-full sm:w-auto px-8 py-3.5 bg-blue-700 text-white font-semibold rounded-xl hover:bg-blue-800 transition-colors border border-blue-500 text-center"
             >
               Contact Doctor
-            </Link>
+            </a>
 
           </div>
 
