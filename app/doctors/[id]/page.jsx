@@ -1,6 +1,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+export function generateStaticParams() {
+  return [
+    { id: 'james-anderson' },
+    { id: 'michael-carter' },
+    { id: 'daniel-wilson' },
+    { id: 'ethan-brown' },
+    { id: 'william-taylor' },
+    { id: 'alexander-moore' },
+    { id: 'oliver-smith' },
+    { id: 'sophia-williams' },
+    { id: 'olivia-davis' },
+    { id: 'emma-thompson' },
+    { id: 'charlotte-miller' },
+    { id: 'emily-johnson' },
+  ];
+}
+
 const doctorsData = {
   'james-anderson': {
     id: 'james-anderson',
@@ -1131,12 +1148,6 @@ const doctorsData = {
   },
 };
 
-export function generateStaticParams() {
-  return Object.keys(doctorsData).map((id) => ({
-    id,
-  }));
-}
-
 export default async function DoctorPortfolioPage({ params }) {
   const { id } = await params;
 
@@ -1155,7 +1166,8 @@ export default async function DoctorPortfolioPage({ params }) {
           </h1>
 
           <p className="text-slate-600 text-sm mb-6">
-            The doctor profile you are searching for does not exist or may have been updated.
+            The doctor profile you are searching for does not exist or may have
+            been updated.
           </p>
 
           <Link

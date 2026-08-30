@@ -1,5 +1,22 @@
 import Link from 'next/link';
 
+export function generateStaticParams() {
+  return [
+    { id: 'james-anderson' },
+    { id: 'michael-carter' },
+    { id: 'daniel-wilson' },
+    { id: 'ethan-brown' },
+    { id: 'william-taylor' },
+    { id: 'alexander-moore' },
+    { id: 'oliver-smith' },
+    { id: 'sophia-williams' },
+    { id: 'olivia-davis' },
+    { id: 'emma-thompson' },
+    { id: 'charlotte-miller' },
+    { id: 'emily-johnson' },
+  ];
+}
+
 export default async function BookAppointmentPage({ params }) {
   const { id } = await params;
 
