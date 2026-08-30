@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MediBook — Doctor Appointment Platform
 
-## Getting Started
+A modern doctor appointment booking platform built with **Next.js** and **Tailwind CSS**.
 
-First, run the development server:
+## ✨ Overview
+
+MediBook is a responsive healthcare platform that allows users to explore doctors, view detailed doctor profiles, and book appointments through a simple and user-friendly interface.
+
+## 🚀 Features
+
+* 👨‍⚕️ Browse available doctors
+* 🔎 Search and explore doctors by specialty
+* 📋 Detailed doctor profile pages
+* 📅 Appointment booking form
+* 🏥 Clinic and practice information
+* 📱 Fully responsive design
+* 🎨 Modern UI built with Tailwind CSS
+* ⚡ Fast navigation with Next.js
+* 🖼️ Optimized images using Next.js Image
+
+## 🛠️ Tech Stack
+
+* **Next.js**
+* **React**
+* **JavaScript / JSX**
+* **Tailwind CSS**
+* **Next.js App Router**
+* **Git & GitHub**
+
+## 📂 Project Structure
+
+```text
+appointment-app/
+├── app/
+│   ├── doctors/
+│   │   └── [id]/
+│   │       ├── page.jsx
+│   │       └── appointment/
+│   │           └── page.jsx
+│   ├── explore/
+│   ├── _component/
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── public/
+│   ├── doctor1.png
+│   ├── doctor2.png
+│   ├── ...
+│   ├── logo.png
+│   └── MediaBookIntro.mp4
+│
+├── components/
+├── lib/
+├── package.json
+└── README.md
+```
+
+## ⚙️ Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/zcvbnklpoiu-netizen/appointment-app.git
+```
+
+Navigate to the project:
+
+```bash
+cd appointment-app
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📸 Project
 
-## Learn More
+The project includes:
 
-To learn more about Next.js, take a look at the following resources:
+* Doctor listing page
+* Doctor portfolio/profile
+* Appointment booking page
+* Clinic exploration page
+* Responsive layouts for desktop and mobile
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👨‍💻 Developer
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Mohamed Ayman**
 
-## Deploy on Vercel
+Frontend Developer interested in building modern and responsive web applications.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🔗 Links
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* GitHub: https://github.com/zcvbnklpoiu-netizen
+* Project Repository: https://github.com/zcvbnklpoiu-netizen/appointment-app
+
+## 📄 License
+
+This project was created for educational and portfolio purposes.
+
