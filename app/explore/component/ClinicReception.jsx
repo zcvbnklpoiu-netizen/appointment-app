@@ -24,7 +24,7 @@ function ClinicReception() {
 
         <div className="relative h-[280px] w-full max-w-[550px] overflow-hidden rounded-2xl shadow-xl sm:h-[350px] lg:h-[420px]">
           <Image
-            src="/ClinicReception.png"
+            src="/appointment-app/ClinicReception.png"
             alt="MediaBook reception and booking team"
             fill
             sizes="(max-width: 1024px) 100vw, 550px"

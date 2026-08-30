@@ -1,3 +1,4 @@
+
 import React from "react";
 import Image from "next/image";
 
@@ -24,7 +25,7 @@ function ClinicWaiting() {
 
         <div className="relative h-[280px] w-full max-w-[550px] overflow-hidden rounded-2xl shadow-xl sm:h-[350px] lg:h-[420px]">
           <Image
-            src="/ClinicWaiting.png"
+            src="/appointment-app/ClinicWaiting.png"
             alt="MediaBook clinic waiting area"
             fill
             sizes="(max-width: 1024px) 100vw, 550px"

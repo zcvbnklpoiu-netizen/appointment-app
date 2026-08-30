@@ -1,44 +1,45 @@
+
 import React from "react";
 import Image from "next/image";
 
 const facilities = [
   {
-    image: "/ClinicFacilities1.png",
+    image: "/appointment-app/ClinicFacilities1.png",
     tag: "Modern Consultation Rooms",
     title: "Comfortable Spaces for Every Consultation",
     description:
       "Our consultation rooms are designed to provide a calm, private, and comfortable environment for every patient.",
   },
   {
-    image: "/ClinicFacilities2.png",
+    image: "/appointment-app/ClinicFacilities2.png",
     tag: "Advanced Equipment",
     title: "Modern Technology for Better Care",
     description:
       "Modern medical equipment supports our specialists in delivering accurate and efficient care.",
   },
   {
-    image: "/ClinicFacilities3.png",
+    image: "/appointment-app/ClinicFacilities3.png",
     tag: "Patient Care",
     title: "A Space Designed Around You",
     description:
       "Every detail of our facilities is designed to make your healthcare experience easier and more comfortable.",
   },
   {
-    image: "/ClinicFacilities4.png",
+    image: "/appointment-app/ClinicFacilities4.png",
     tag: "Professional Environment",
     title: "Built for Quality Healthcare",
     description:
       "A professional medical environment where doctors and healthcare teams can focus on what matters most: patient care.",
   },
   {
-    image: "/ClinicFacilities5.png",
+    image: "/appointment-app/ClinicFacilities5.png",
     tag: "Clean & Organized",
     title: "A Safe and Welcoming Environment",
     description:
       "We maintain clean, organized spaces to create a reassuring experience for every patient.",
   },
   {
-    image: "/ClinicFacilities6.png",
+    image: "/appointment-app/ClinicFacilities6.png",
     tag: "Complete Care",
     title: "Everything You Need in One Place",
     description:
@@ -50,7 +51,6 @@ function ClinicFacilities() {
   return (
     <section className="bg-slate-50 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
       <div className="mx-auto max-w-7xl">
-
         <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
           <span className="text-sm font-semibold uppercase tracking-wider text-blue-600">
             Our Facilities
@@ -98,7 +98,6 @@ function ClinicFacilities() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

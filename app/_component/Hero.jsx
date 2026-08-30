@@ -1,3 +1,4 @@
+
 import React from "react";
 import Image from "next/image";
 
@@ -35,7 +36,7 @@ function Hero() {
         <div className="relative flex w-full flex-1 justify-center lg:justify-end">
           <div className="relative h-[300px] w-full max-w-[400px] sm:h-[350px] sm:max-w-[450px] lg:h-[400px] lg:max-w-[500px]">
             <Image
-              src="/Hero.png"
+              src="/appointment-app/Hero.png"
               alt="Doctor"
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 500px"

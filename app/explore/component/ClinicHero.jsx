@@ -1,3 +1,4 @@
+
 import React from "react";
 import Image from "next/image";
 
@@ -24,7 +25,7 @@ function ClinicHero() {
 
         <div className="relative h-[280px] w-full max-w-[550px] overflow-hidden rounded-2xl shadow-xl sm:h-[350px] lg:h-[420px]">
           <Image
-            src="/ClinicHero.png"
+            src="/appointment-app/ClinicHero.png"
             alt="MediaBook Clinic"
             fill
             className="object-cover"
