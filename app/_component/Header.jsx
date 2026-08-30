@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -14,18 +15,13 @@ function Header() {
       name: "Explore",
       path: "/explore",
     },
-    {
-      id: 3,
-      name: "Contact",
-      path: "/contact",
-    },
   ];
 
   return (
     <div className="flex w-full items-center justify-between px-10 py-4">
       <div className="flex items-center gap-7">
         <Image
-          src="/logo.png"
+          src="/appointment-app/logo.png"
           alt="Logo"
           width={50}
           height={50}

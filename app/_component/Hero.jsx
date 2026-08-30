@@ -39,9 +39,9 @@ function Hero() {
               src="/appointment-app/Hero.png"
               alt="Doctor"
               fill
+              priority
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 500px"
               className="object-contain"
-              priority
             />
           </div>
         </div>
