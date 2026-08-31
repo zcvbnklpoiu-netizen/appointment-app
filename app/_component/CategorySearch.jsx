@@ -1,7 +1,9 @@
+
 "use client";
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CiSearch } from "react-icons/ci";
 
@@ -9,84 +11,84 @@ const doctors = [
   {
     name: "Dr. James Anderson",
     specialty: "Orthopedic Surgeon",
-    image: "/doctor1.png",
+    image: "/appointment-app/doctor1.png",
     profile: "/doctors/james-anderson",
     appointment: "/doctors/james-anderson/appointment",
   },
   {
     name: "Dr. Michael Carter",
     specialty: "Cardiologist",
-    image: "/doctor2.png",
+    image: "/appointment-app/doctor2.png",
     profile: "/doctors/michael-carter",
     appointment: "/doctors/michael-carter/appointment",
   },
   {
     name: "Dr. Daniel Wilson",
     specialty: "Neurologist",
-    image: "/doctor3.png",
+    image: "/appointment-app/doctor3.png",
     profile: "/doctors/daniel-wilson",
     appointment: "/doctors/daniel-wilson/appointment",
   },
   {
     name: "Dr. Ethan Brown",
     specialty: "Pediatrician",
-    image: "/doctor4.png",
+    image: "/appointment-app/doctor4.png",
     profile: "/doctors/ethan-brown",
     appointment: "/doctors/ethan-brown/appointment",
   },
   {
     name: "Dr. William Taylor",
     specialty: "Dermatologist",
-    image: "/doctor5.png",
+    image: "/appointment-app/doctor5.png",
     profile: "/doctors/william-taylor",
     appointment: "/doctors/william-taylor/appointment",
   },
   {
     name: "Dr. Alexander Moore",
     specialty: "Ophthalmologist",
-    image: "/doctor6.png",
+    image: "/appointment-app/doctor6.png",
     profile: "/doctors/alexander-moore",
     appointment: "/doctors/alexander-moore/appointment",
   },
   {
     name: "Dr. Oliver Smith",
     specialty: "Internal Medicine",
-    image: "/doctor7.png",
+    image: "/appointment-app/doctor7.png",
     profile: "/doctors/oliver-smith",
     appointment: "/doctors/oliver-smith/appointment",
   },
   {
     name: "Dr. Emily Johnson",
     specialty: "Gynecologist",
-    image: "/doctor8.png",
+    image: "/appointment-app/doctor8.png",
     profile: "/doctors/emily-johnson",
     appointment: "/doctors/emily-johnson/appointment",
   },
   {
     name: "Dr. Sophia Williams",
     specialty: "Dentist",
-    image: "/doctor9.png",
+    image: "/appointment-app/doctor9.png",
     profile: "/doctors/sophia-williams",
     appointment: "/doctors/sophia-williams/appointment",
   },
   {
     name: "Dr. Olivia Davis",
     specialty: "ENT Specialist",
-    image: "/doctor10.png",
+    image: "/appointment-app/doctor10.png",
     profile: "/doctors/olivia-davis",
     appointment: "/doctors/olivia-davis/appointment",
   },
   {
     name: "Dr. Emma Thompson",
     specialty: "General Surgeon",
-    image: "/doctor11.png",
+    image: "/appointment-app/doctor11.png",
     profile: "/doctors/emma-thompson",
     appointment: "/doctors/emma-thompson/appointment",
   },
   {
     name: "Dr. Charlotte Miller",
     specialty: "Psychiatrist",
-    image: "/doctor12.png",
+    image: "/appointment-app/doctor12.png",
     profile: "/doctors/charlotte-miller",
     appointment: "/doctors/charlotte-miller/appointment",
   },
@@ -94,14 +96,14 @@ const doctors = [
 
 function CategorySearch() {
   const [search, setSearch] = useState("");
-  const [doctor, setDoctor] = useState(null);
+  const [doctor, setDoctor] = useState<(typeof doctors)[number] | null>(null);
 
   function handleclickDoctors() {
     const foundDoctor = doctors.find((doctor) =>
       doctor.name.toLowerCase().includes(search.trim().toLowerCase())
     );
 
-    setDoctor(foundDoctor);
+    setDoctor(foundDoctor ?? null);
   }
 
   return (
@@ -117,7 +119,7 @@ function CategorySearch() {
         <input
           type="text"
           value={search}
-          onChange={(x) => setSearch(x.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Enter your Doctor"
           className="min-w-0 flex-1 rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 sm:text-base"
         />
@@ -136,8 +138,9 @@ function CategorySearch() {
       {doctor && (
         <div className="mx-auto mt-10 w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
 
-          {/* Image */}
+          {/* Doctor Image */}
           <div className="relative h-72 w-full bg-blue-50">
+
             <Image
               src={doctor.image}
               alt={doctor.name}
@@ -145,6 +148,7 @@ function CategorySearch() {
               sizes="(max-width: 640px) 100vw, 384px"
               className="object-contain"
             />
+
           </div>
 
           {/* Doctor Information */}
@@ -161,32 +165,33 @@ function CategorySearch() {
             {/* Buttons */}
             <div className="mt-5 flex gap-3">
 
-              <a
+              <Link
                 href={doctor.profile}
                 className="flex-1 rounded-lg bg-blue-600 px-3 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
               >
                 View Profile
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href={doctor.appointment}
                 className="flex-1 rounded-lg border border-blue-600 px-3 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
               >
                 Book Appointment
-              </a>
+              </Link>
 
             </div>
 
           </div>
         </div>
       )}
-    
-   {/* No Doctor */}
+
+      {/* No Doctor */}
       {search && !doctor && (
         <p className="mt-8 text-center text-slate-500">
           No doctor found.
         </p>
       )}
+
     </section>
   );
 }

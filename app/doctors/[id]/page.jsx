@@ -30,14 +30,11 @@ const doctorsData = {
     location: 'Building A, Suite 300, Medical Arts District',
     availability: 'Mon - Thu (8:00 AM - 4:00 PM)',
     consultationType: 'In-Person & Surgical Consults',
-
     contact: {
       phone: '+201000000001',
       email: 'james.anderson@example.com',
     },
-
     bio: 'Dr. James Anderson is a highly dedicated Orthopedic Surgeon specializing in minimally invasive joint preservation, sports injury recovery, and advanced reconstructive surgery. With over 15 years of surgical experience, he focuses on restoring joint mobility and improving long-term quality of life.',
-
     experience: [
       {
         role: 'Senior Orthopedic Surgeon',
@@ -54,7 +51,6 @@ const doctorsData = {
           'Managed acute musculoskeletal trauma and reconstructive limb procedures.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -67,12 +63,10 @@ const doctorsData = {
         year: '2013',
       },
     ],
-
     certifications: [
       'Board Certified by the American Board of Orthopaedic Surgery',
       'Fellow of the American Academy of Orthopaedic Surgeons (FAAOS)',
     ],
-
     services: [
       {
         title: 'Orthopedic Consultation',
@@ -95,7 +89,6 @@ const doctorsData = {
           'Customized post-operative rehabilitation and physical therapy recovery pathways.',
       },
     ],
-
     expertise: [
       'Joint Preservation',
       'Arthroscopic Surgery',
@@ -103,12 +96,10 @@ const doctorsData = {
       'Complex Fracture Care',
       'Rotator Cuff Repair',
     ],
-
     achievements: [
       'Pioneered advanced minimally invasive knee preservation procedures.',
       'Recipient of the Regional Healthcare Award for Surgical Excellence (2023).',
     ],
-
     patientCareApproach:
       'My objective is to evaluate non-surgical alternatives first and reserve surgical intervention for when it truly provides the best path back to an active lifestyle.',
   },
@@ -124,14 +115,11 @@ const doctorsData = {
     location: 'Suite 402, Central Cardiology Plaza',
     availability: 'Mon - Fri (8:30 AM - 5:00 PM)',
     consultationType: 'In-Person & Virtual Consultation',
-
     contact: {
       phone: '+201000000002',
       email: 'michael.carter@example.com',
     },
-
     bio: 'Dr. Michael Carter is a board-certified Cardiologist focused on preventive cardiology, heart failure management, and non-invasive cardiovascular diagnostics. He emphasizes early cardiovascular risk detection and holistic lifestyle modifications.',
-
     experience: [
       {
         role: 'Chief of Clinical Cardiology',
@@ -148,7 +136,6 @@ const doctorsData = {
           'Managed inpatient coronary care units and preventative cardiac screening clinics.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -161,12 +148,10 @@ const doctorsData = {
         year: '2012',
       },
     ],
-
     certifications: [
       'Board Certified in Cardiovascular Disease (ABIM)',
       'Certified Specialist in Adult Comprehensive Echocardiography',
     ],
-
     services: [
       {
         title: 'Cardiac Consultation',
@@ -189,7 +174,6 @@ const doctorsData = {
           'Personalized treatment protocols for resistant hypertension and vascular wellness.',
       },
     ],
-
     expertise: [
       'Preventive Cardiology',
       'Echocardiography',
@@ -197,12 +181,10 @@ const doctorsData = {
       'Heart Failure Care',
       'Lipidology',
     ],
-
     achievements: [
       'Author of multiple clinical publications on preventative cardiovascular health.',
       'Named Top Regional Cardiologist for Patient Satisfaction.',
     ],
-
     patientCareApproach:
       'Clear communication and proactive risk management are the foundation of cardiac longevity. I partner with patients to keep their heart health on track.',
   },
@@ -218,14 +200,11 @@ const doctorsData = {
     location: 'Building C, Suite 105, Medical Plaza',
     availability: 'Tue - Fri (9:00 AM - 4:00 PM)',
     consultationType: 'In-Person & Telehealth',
-
     contact: {
       phone: '+201000000003',
       email: 'daniel.wilson@example.com',
     },
-
     bio: 'Dr. Daniel Wilson specializes in clinical neurology, focusing on the diagnosis and long-term care of migraines, nerve health, epilepsy, and neurodegenerative conditions through cutting-edge, patient-focused protocols.',
-
     experience: [
       {
         role: 'Consulting Neurologist',
@@ -242,7 +221,6 @@ const doctorsData = {
           'Conducted electroencephalography (EEG) research and nerve conduction studies.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -255,12 +233,10 @@ const doctorsData = {
         year: '2014',
       },
     ],
-
     certifications: [
       'Board Certified by the American Board of Psychiatry and Neurology',
       'Clinical Neurophysiology Certified Specialist',
     ],
-
     services: [
       {
         title: 'Neurological Consultation',
@@ -283,7 +259,6 @@ const doctorsData = {
           'Early screening protocols for cognitive changes and memory health tracking.',
       },
     ],
-
     expertise: [
       'Migraine Management',
       'Epilepsy & Seizures',
@@ -291,12 +266,10 @@ const doctorsData = {
       'Parkinson’s Care',
       'Neuroimaging Interpretation',
     ],
-
     achievements: [
       'Developed standardized clinical guidelines for outpatient migraine management.',
       'Invited speaker at the National Neurological Association Conference.',
     ],
-
     patientCareApproach:
       'Neurological symptoms require methodical diagnostic rigor combined with empathetic reassurance so patients understand every step of their treatment plan.',
   },
@@ -312,14 +285,11 @@ const doctorsData = {
     location: 'Suite 201, Family Health Center',
     availability: 'Mon - Fri (8:00 AM - 4:30 PM)',
     consultationType: 'In-Person & Telehealth',
-
     contact: {
       phone: '+201000000004',
       email: 'ethan.brown@example.com',
     },
-
     bio: 'Dr. Ethan Brown provides comprehensive pediatric medical care from infancy through adolescence. His practice prioritizes developmental milestone monitoring, preventive wellness, and child-friendly care environments.',
-
     experience: [
       {
         role: 'Lead Pediatrician',
@@ -336,7 +306,6 @@ const doctorsData = {
           'Delivered pediatric inpatient care and emergency pediatric evaluations.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -349,12 +318,10 @@ const doctorsData = {
         year: '2014',
       },
     ],
-
     certifications: [
       'Board Certified by the American Board of Pediatrics',
       'Pediatric Advanced Life Support (PALS) Certified',
     ],
-
     services: [
       {
         title: 'Pediatric Consultation',
@@ -377,7 +344,6 @@ const doctorsData = {
           'Prompt evaluation for common childhood illnesses, ear infections, and minor injuries.',
       },
     ],
-
     expertise: [
       'Childhood Wellness',
       'Growth & Development',
@@ -385,12 +351,10 @@ const doctorsData = {
       'Immunizations',
       'Adolescent Medicine',
     ],
-
     achievements: [
       'Community Advocate for Pediatric Literacy and Preventative Healthcare.',
       'Awarded "Compassionate Pediatrician of the Year" (2022).',
     ],
-
     patientCareApproach:
       'Children thrive in environments where they feel safe. I focus on creating a gentle, positive healthcare experience for young patients and their families.',
   },
@@ -406,14 +370,11 @@ const doctorsData = {
     location: 'Suite 304, Wellness Pavilion',
     availability: 'Mon - Thu (9:00 AM - 5:00 PM)',
     consultationType: 'In-Person Consultation',
-
     contact: {
       phone: '+201000000005',
       email: 'william.taylor@example.com',
     },
-
     bio: 'Dr. William Taylor is a board-certified Dermatologist focusing on medical dermatology, skin cancer screening, acne management, and inflammatory skin condition therapies.',
-
     experience: [
       {
         role: 'Staff Dermatologist',
@@ -430,7 +391,6 @@ const doctorsData = {
           'Performed outpatient dermatologic procedures and skin biopsies.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -443,12 +403,10 @@ const doctorsData = {
         year: '2014',
       },
     ],
-
     certifications: [
       'Board Certified by the American Board of Dermatology',
       'Fellow of the American Academy of Dermatology (FAAD)',
     ],
-
     services: [
       {
         title: 'Dermatological Consultation',
@@ -471,7 +429,6 @@ const doctorsData = {
           'Targeted biological and topical regimens for chronic inflammatory skin relief.',
       },
     ],
-
     expertise: [
       'Skin Cancer Screening',
       'Acne Management',
@@ -479,12 +436,10 @@ const doctorsData = {
       'Dermoscopy',
       'Surgical Excision',
     ],
-
     achievements: [
       'Lead author on clinical studies regarding early detection of skin lesions.',
       'Active member of the International Society of Dermatology.',
     ],
-
     patientCareApproach:
       'Dermatology requires precision and attention to detail. I work closely with patients to restore healthy skin function and confidence.',
   },
@@ -500,14 +455,11 @@ const doctorsData = {
     location: 'Building B, Suite 102, Vision Plaza',
     availability: 'Mon - Fri (8:30 AM - 4:00 PM)',
     consultationType: 'In-Person Evaluation',
-
     contact: {
       phone: '+201000000006',
       email: 'alexander.moore@example.com',
     },
-
     bio: 'Dr. Alexander Moore provides advanced medical eye care, specializing in cataract evaluation, glaucoma management, laser vision correction, and total ocular health.',
-
     experience: [
       {
         role: 'Attending Ophthalmologist',
@@ -524,7 +476,6 @@ const doctorsData = {
           'Specialized in anterior segment procedures and refractive surgery techniques.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -537,12 +488,10 @@ const doctorsData = {
         year: '2013',
       },
     ],
-
     certifications: [
       'Board Certified by the American Board of Ophthalmology',
       'Member of the American Society of Cataract and Refractive Surgery',
     ],
-
     services: [
       {
         title: 'Eye Consultation',
@@ -565,7 +514,6 @@ const doctorsData = {
           'Therapeutic management for chronic dry eye and corneal surface disorders.',
       },
     ],
-
     expertise: [
       'Cataract Care',
       'Glaucoma Management',
@@ -573,12 +521,10 @@ const doctorsData = {
       'Dry Eye Therapy',
       'Corneal Health',
     ],
-
     achievements: [
       'Recognized for excellence in clinical intraocular diagnostics.',
       'Pioneered local outpatient dry-eye therapy clinics.',
     ],
-
     patientCareApproach:
       'Preserving vision requires meticulous diagnostic accuracy and gentle patient interactions to ensure lifetime ocular health.',
   },
@@ -594,14 +540,11 @@ const doctorsData = {
     location: 'Suite 500, Health Alliance Building',
     availability: 'Mon - Fri (8:00 AM - 5:00 PM)',
     consultationType: 'In-Person & Virtual Consultation',
-
     contact: {
       phone: '+201000000007',
       email: 'oliver.smith@example.com',
     },
-
     bio: 'Dr. Oliver Smith is an experienced Internist managing complex adult health conditions, chronic disease prevention, diagnostic health evaluations, and primary adult healthcare.',
-
     experience: [
       {
         role: 'Senior Internist',
@@ -618,7 +561,6 @@ const doctorsData = {
           'Managed inpatient internal medicine wards and resident teaching programs.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -631,12 +573,10 @@ const doctorsData = {
         year: '2008',
       },
     ],
-
     certifications: [
       'Board Certified in Internal Medicine (ABIM)',
       'Fellow of the American College of Physicians (FACP)',
     ],
-
     services: [
       {
         title: 'Internal Medicine Consultation',
@@ -659,7 +599,6 @@ const doctorsData = {
           'Investigation of complex, unexplained symptoms requiring holistic medical inquiry.',
       },
     ],
-
     expertise: [
       'Preventive Medicine',
       'Metabolic Syndrome Care',
@@ -667,12 +606,10 @@ const doctorsData = {
       'Geriatric Health',
       'Diagnostic Assessment',
     ],
-
     achievements: [
       'Fellowship status granted by the American College of Physicians.',
       'Over 15 years of dedicated primary adult care service.',
     ],
-
     patientCareApproach:
       'Internal medicine is like fitting together a complex medical puzzle. I focus on understanding the whole patient rather than isolated symptoms.',
   },
@@ -688,14 +625,11 @@ const doctorsData = {
     location: 'Suite 101, Dental Arts Building',
     availability: 'Mon - Thu (8:30 AM - 4:30 PM)',
     consultationType: 'In-Person Consultation',
-
     contact: {
       phone: '+201000000009',
       email: 'sophia.williams@example.com',
     },
-
     bio: 'Dr. Sophia Williams offers comprehensive general and preventative dental care. She focuses on patient comfort, gentle oral care procedures, and maintaining healthy smiles.',
-
     experience: [
       {
         role: 'Lead Dentist',
@@ -712,7 +646,6 @@ const doctorsData = {
           'Performed routine restorative procedures and preventative patient consultations.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Dental Surgery (D.D.S.)',
@@ -725,12 +658,10 @@ const doctorsData = {
         year: '2014',
       },
     ],
-
     certifications: [
       'Licensed by the State Dental Board',
       'Active Member of the American Dental Association (ADA)',
     ],
-
     services: [
       {
         title: 'Dental Consultation',
@@ -753,7 +684,6 @@ const doctorsData = {
           'Post-treatment oral health checks and long-term hygiene routine planning.',
       },
     ],
-
     expertise: [
       'Preventative Dentistry',
       'Restorative Oral Care',
@@ -761,12 +691,10 @@ const doctorsData = {
       'Patient Comfort Care',
       'Dental Hygiene',
     ],
-
     achievements: [
       'Recognized for exceptional gentle care in patient satisfaction surveys.',
       'Active participant in community oral health awareness events.',
     ],
-
     patientCareApproach:
       'Dental visits should be anxiety-free. I prioritize gentle care and clear communication to make every visit as comfortable as possible.',
   },
@@ -782,14 +710,11 @@ const doctorsData = {
     location: 'Suite 203, Medical Tower West',
     availability: 'Tue - Fri (9:00 AM - 4:30 PM)',
     consultationType: 'In-Person Evaluation',
-
     contact: {
       phone: '+201000000010',
       email: 'olivia.davis@example.com',
     },
-
     bio: 'Dr. Olivia Davis is an Otolaryngologist specializing in disorders of the ear, nose, and throat. She provides targeted medical evaluations for sinus issues, hearing health, and throat disorders.',
-
     experience: [
       {
         role: 'Consulting Otolaryngologist',
@@ -806,7 +731,6 @@ const doctorsData = {
           'Provided endoscopic sinus assessments and otologic evaluations.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -819,12 +743,10 @@ const doctorsData = {
         year: '2014',
       },
     ],
-
     certifications: [
       'Board Certified by the American Board of Otolaryngology',
       'Member of the American Academy of Otolaryngology-Head and Neck Surgery',
     ],
-
     services: [
       {
         title: 'ENT Consultation',
@@ -847,7 +769,6 @@ const doctorsData = {
           'Clinical examination of vocal cord function, swallowing issues, and throat discomfort.',
       },
     ],
-
     expertise: [
       'Sinus Pathology',
       'Nasal Endoscopy',
@@ -855,12 +776,10 @@ const doctorsData = {
       'Voice Disorders',
       'Allergy Management',
     ],
-
     achievements: [
       'Pioneered outpatient endoscopic sinus screening protocols.',
       'Published researcher on vocal cord management.',
     ],
-
     patientCareApproach:
       'Upper airway and sensory health directly affect daily comfort. I aim to provide clear diagnostic answers and targeted relief.',
   },
@@ -876,14 +795,11 @@ const doctorsData = {
     location: 'Building A, 4th Floor, Surgical Pavilion',
     availability: 'Mon - Thu (8:00 AM - 3:30 PM)',
     consultationType: 'In-Person Surgical Consultation',
-
     contact: {
       phone: '+201000000011',
       email: 'emma.thompson@example.com',
     },
-
     bio: 'Dr. Emma Thompson is an experienced General Surgeon specializing in laparoscopic procedures, hernia repair, abdominal wall reconstruction, and outpatient surgical management.',
-
     experience: [
       {
         role: 'Attending General Surgeon',
@@ -900,7 +816,6 @@ const doctorsData = {
           'Managed acute surgical cases and outpatient surgical evaluations.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -913,12 +828,10 @@ const doctorsData = {
         year: '2011',
       },
     ],
-
     certifications: [
       'Board Certified by the American Board of Surgery',
       'Fellow of the American College of Surgeons (FACS)',
     ],
-
     services: [
       {
         title: 'Surgical Consultation',
@@ -941,7 +854,6 @@ const doctorsData = {
           'Structured post-operative care, wound healing checks, and recovery tracking.',
       },
     ],
-
     expertise: [
       'Laparoscopic Surgery',
       'Hernia Repair',
@@ -949,12 +861,10 @@ const doctorsData = {
       'Wound Management',
       'Surgical Pre-care',
     ],
-
     achievements: [
       'Over 15 years of dedicated surgical service with high safety ratings.',
       'Fellow of the American College of Surgeons.',
     ],
-
     patientCareApproach:
       'Surgery can be intimidating. I ensure patients fully understand their procedures, risks, and recovery pathways beforehand.',
   },
@@ -970,14 +880,11 @@ const doctorsData = {
     location: 'Suite 305, Serenity Health Building',
     availability: 'Mon - Fri (9:00 AM - 5:00 PM)',
     consultationType: 'In-Person & Telehealth',
-
     contact: {
       phone: '+201000000012',
       email: 'charlotte.miller@example.com',
     },
-
     bio: 'Dr. Charlotte Miller provides empathetic psychiatric care, specializing in mood disorders, anxiety management, stress resilience, and adult behavioral health.',
-
     experience: [
       {
         role: 'Consulting Psychiatrist',
@@ -994,7 +901,6 @@ const doctorsData = {
           'Provided clinical psychiatric evaluations and crisis intervention services.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -1007,12 +913,10 @@ const doctorsData = {
         year: '2015',
       },
     ],
-
     certifications: [
       'Board Certified by the American Board of Psychiatry and Neurology',
       'Member of the American Psychiatric Association (APA)',
     ],
-
     services: [
       {
         title: 'Psychiatric Consultation',
@@ -1035,7 +939,6 @@ const doctorsData = {
           'Regular consultations to track clinical progress and emotional resilience.',
       },
     ],
-
     expertise: [
       'Anxiety Disorders',
       'Mood Disorders',
@@ -1043,12 +946,10 @@ const doctorsData = {
       'Psychopharmacology',
       'Stress Management',
     ],
-
     achievements: [
       'Advocate for accessible mental healthcare and public wellness outreach.',
       'Recognized for exceptional compassionate care in patient feedback.',
     ],
-
     patientCareApproach:
       'Mental wellness requires a supportive, non-judgmental environment. I prioritize active listening and collaborative treatment planning.',
   },
@@ -1064,14 +965,11 @@ const doctorsData = {
     location: 'Suite 400, Women’s Care Pavilion',
     availability: 'Mon - Fri (8:30 AM - 4:30 PM)',
     consultationType: 'In-Person Care',
-
     contact: {
       phone: '+201000000008',
       email: 'emily.johnson@example.com',
     },
-
     bio: 'Dr. Emily Johnson provides comprehensive women’s reproductive healthcare, preventative annual wellness checks, hormonal health support, and specialized gynecological evaluations.',
-
     experience: [
       {
         role: 'Attending Gynecologist',
@@ -1088,7 +986,6 @@ const doctorsData = {
           'Delivered clinical gynecological care and outpatient procedures.',
       },
     ],
-
     education: [
       {
         degree: 'Doctor of Medicine (M.D.)',
@@ -1101,12 +998,10 @@ const doctorsData = {
         year: '2012',
       },
     ],
-
     certifications: [
       'Board Certified by the American Board of Obstetrics and Gynecology (ABOG)',
       'Fellow of the American College of Obstetricians and Gynecologists (FACOG)',
     ],
-
     services: [
       {
         title: 'Gynecological Consultation',
@@ -1129,7 +1024,6 @@ const doctorsData = {
           'Targeted care plans for long-term reproductive health and wellness support.',
       },
     ],
-
     expertise: [
       'Preventative Wellness',
       'Hormonal Health',
@@ -1137,12 +1031,10 @@ const doctorsData = {
       'Pelvic Health',
       'Menopause Support',
     ],
-
     achievements: [
       'Community Speaker on Women’s Health Education.',
       'Recipient of the Outstanding Women’s Caregiver Award.',
     ],
-
     patientCareApproach:
       'Women’s healthcare should be grounded in comfort, trust, and continuous guidance across every stage of life.',
   },
@@ -1201,14 +1093,16 @@ export default async function DoctorPortfolioPage({ params }) {
 
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shadow-inner">
+
                 <Image
-                  src={doctor.image}
+                  src={`/appointment-app${doctor.image}`}
                   alt={doctor.name}
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover object-center"
                 />
+
               </div>
             </div>
 
@@ -1376,7 +1270,6 @@ export default async function DoctorPortfolioPage({ params }) {
             </ul>
 
           </section>
-
         </div>
 
         {/* SERVICES */}
@@ -1460,7 +1353,6 @@ export default async function DoctorPortfolioPage({ params }) {
             </p>
 
           </section>
-
         </div>
 
         {/* STATISTICS */}
