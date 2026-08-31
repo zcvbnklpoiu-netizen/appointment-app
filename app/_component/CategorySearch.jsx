@@ -96,14 +96,16 @@ const doctors = [
 
 function CategorySearch() {
   const [search, setSearch] = useState("");
-  const [doctor, setDoctor] = useState<(typeof doctors)[number] | null>(null);
+  const [doctor, setDoctor] = useState(null);
 
   function handleclickDoctors() {
+    const searchValue = search.trim().toLowerCase();
+
     const foundDoctor = doctors.find((doctor) =>
-      doctor.name.toLowerCase().includes(search.trim().toLowerCase())
+      doctor.name.toLowerCase().includes(searchValue)
     );
 
-    setDoctor(foundDoctor ?? null);
+    setDoctor(foundDoctor || null);
   }
 
   return (
