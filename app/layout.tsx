@@ -1,32 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "./_component/motion.css";
 import Header from "./_component/Header";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Footer from "./_component/Footer";
 
 export const metadata: Metadata = {
-  title: "Appointment App",
-  description: "Book and manage your appointments easily.",
+  title: "MediaBook | Explore care options",
+  description: "Explore clinician profiles, specialties, and appointment options with MediaBook.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
-      <body className="px-5 md:px-20">
+      <body>
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

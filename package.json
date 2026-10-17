@@ -6,10 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --test tests/appointment-validation.test.js tests/availability-calendar.test.js tests/contact-validation.test.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "node scripts/ensure-sqlite-db.mjs && prisma migrate dev",
+    "db:deploy": "node scripts/ensure-sqlite-db.mjs && prisma migrate deploy",
+    "db:studio": "prisma studio",
+    "admin:create": "node --env-file=.env --import tsx scripts/create-admin.ts",
+    "admin:password:reset": "node --env-file=.env scripts/reset-admin-password.mjs",
+    "test:integration": "node --test tests/api.integration.test.js",
+    "prebuild": "prisma generate"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "@better-auth/prisma-adapter": "^1.7.10",
+    "@prisma/adapter-better-sqlite3": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "better-auth": "^1.7.10",
+    "better-sqlite3": "^12.11.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.33.0",
@@ -29,7 +43,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.2",
+    "prisma": "7.10.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

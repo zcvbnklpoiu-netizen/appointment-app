@@ -1,24 +1,22 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import AppointmentForm from './AppointmentForm';
+import { getDoctorById } from '@/lib/doctor-data';
+import { prisma } from '@/lib/prisma';
 
-export function generateStaticParams() {
-  return [
-    { id: 'james-anderson' },
-    { id: 'michael-carter' },
-    { id: 'daniel-wilson' },
-    { id: 'ethan-brown' },
-    { id: 'william-taylor' },
-    { id: 'alexander-moore' },
-    { id: 'oliver-smith' },
-    { id: 'sophia-williams' },
-    { id: 'olivia-davis' },
-    { id: 'emma-thompson' },
-    { id: 'charlotte-miller' },
-    { id: 'emily-johnson' },
-  ];
-}
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export default async function BookAppointmentPage({ params }) {
   const { id } = await params;
+  let databaseDoctor = null;
+  try {
+    databaseDoctor = await prisma.doctor.findFirst({ where: { slug: id, isActive: true }, select: { displayName: true, specialty: { select: { name: true } } } });
+  } catch {
+    // The sample booking page remains available while local setup is incomplete.
+  }
+  const doctor = databaseDoctor ?? getDoctorById(id);
+  if (!doctor) notFound();
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-12">
@@ -26,7 +24,7 @@ export default async function BookAppointmentPage({ params }) {
 
         <Link
           href={`/doctors/${id}`}
-          className="text-blue-600 font-semibold text-sm"
+          className="text-[#B86C4D] font-semibold text-sm"
         >
           ← Back to Doctor
         </Link>
@@ -37,78 +35,11 @@ export default async function BookAppointmentPage({ params }) {
           </h1>
 
           <p className="text-slate-500 mt-2">
-            Schedule an appointment with this doctor.
+            Request a preferred time with {databaseDoctor?.displayName ?? doctor.name}, {databaseDoctor?.specialty.name ?? doctor.specialty}.
           </p>
         </div>
 
-        <form className="mt-8 space-y-5">
-
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Your Name
-            </label>
-
-            <input
-              type="text"
-              placeholder="Enter your name"
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Email
-            </label>
-
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Appointment Date
-            </label>
-
-            <input
-              type="date"
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Appointment Time
-            </label>
-
-            <input
-              type="time"
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Notes
-            </label>
-
-            <textarea
-              rows="4"
-              placeholder="Tell us anything important..."
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3.5 rounded-xl font-bold hover:bg-blue-700 transition"
-          >
-            Confirm Appointment
-          </button>
-
-        </form>
+        {databaseDoctor ? <AppointmentForm doctorSlug={id} /> : <div role="status" className="mt-8 rounded-2xl border border-[#E6D6BD] bg-[#FBF5EA] p-5 text-sm leading-6 text-[#57483B]"><p className="font-bold">Online booking is not set up for this sample profile.</p><p className="mt-2">A clinic administrator must add this clinician to the database and publish appointment availability before patients can request a time.</p><Link href="/explore" className="mt-4 inline-block font-semibold underline">Browse clinician profiles</Link></div>}
       </div>
     </main>
   );

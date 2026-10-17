@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
-
-  basePath: "/appointment-app",
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app",
 
   images: {
     unoptimized: true,

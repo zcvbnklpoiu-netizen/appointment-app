@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { publicImage } from "@/lib/public-image";
 
 function ClinicReception() {
   return (
@@ -7,8 +8,8 @@ function ClinicReception() {
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-10 lg:flex-row-reverse lg:justify-between">
 
         <div className="w-full max-w-2xl text-center lg:text-left">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-blue-600 sm:text-base">
-            Patient Support
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-[#B86C4D] sm:text-base">
+            Help with your visit
           </h2>
 
           <h1 className="mt-3 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-5xl">
@@ -24,8 +25,8 @@ function ClinicReception() {
 
         <div className="relative h-[280px] w-full max-w-[550px] overflow-hidden rounded-2xl shadow-xl sm:h-[350px] lg:h-[420px]">
           <Image
-            src="/appointment-app/ClinicReception.png"
-            alt="MediaBook reception and booking team"
+            src={publicImage("/ClinicReception.png")}
+            alt="Illustration of a reception area"
             fill
             sizes="(max-width: 1024px) 100vw, 550px"
             className="object-cover"
