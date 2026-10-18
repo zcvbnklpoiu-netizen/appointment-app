@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
 import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import DashboardClient from "./DashboardClient";
@@ -21,7 +21,7 @@ export const metadata = { title: "Dashboard | MediaBook" };
 
 export default async function DashboardPage() {
   if (process.env.NODE_ENV === "production" && !isAuthConfigured()) redirect("/login?error=auth-unavailable");
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await getAuth().api.getSession({ headers: await headers() });
   if (!session?.user || session.user.isActive === false) redirect("/login");
   const role = session.user.role ?? "PATIENT";
   const adminOverview = role === "ADMIN" ? await loadAdminOverview() : null;

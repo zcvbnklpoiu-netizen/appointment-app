@@ -1,4 +1,5 @@
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
+import { resolveDatabaseConfiguration } from "@/lib/database-config";
 
 export type AppRole = "PATIENT" | "DOCTOR" | "ADMIN";
 
@@ -12,6 +13,7 @@ export function isAuthConfigured() {
     const localHttp = (process.env.NODE_ENV !== "production" || process.env.VERCEL !== "1")
       && ["localhost", "127.0.0.1", "[::1]"].includes(authUrl.hostname)
       && authUrl.protocol === "http:";
+    resolveDatabaseConfiguration(process.env);
     return authUrl.origin === siteUrl.origin
       && (authUrl.protocol === "https:" || localHttp)
       && authUrl.pathname === "/"
@@ -23,7 +25,7 @@ export function isAuthConfigured() {
 
 export async function getRequestUser(request: Request) {
   if (process.env.NODE_ENV === "production" && !isAuthConfigured()) return null;
-  const result = await auth.api.getSession({ headers: request.headers });
+  const result = await getAuth().api.getSession({ headers: request.headers });
   if (!result?.user || result.user.isActive === false) return null;
   return result.user;
 }

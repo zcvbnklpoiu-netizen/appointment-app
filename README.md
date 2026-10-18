@@ -23,7 +23,7 @@ The current scheduling flow supports weekly working windows and generated appoin
 
 ## Local setup
 
-Requirements: Node.js 20.6 or later and npm.
+Requirements: Node.js 20.9 or later and npm.
 
 ```sh
 npm install
@@ -43,12 +43,14 @@ Open `http://localhost:3000/appointment-app`.
 
 ## Vercel and PostgreSQL preparation
 
-Create or connect a persistent PostgreSQL database in the hosting provider, then configure these Vercel environment variables for each intended environment. Use the provider's pooled URL as `DATABASE_URL` and its direct URL as `DIRECT_URL` when supplied. Never put credentials in source control or share them in logs.
+Create or connect a persistent PostgreSQL database in the hosting provider, then configure these Vercel environment variables for each intended environment. Use the provider's pooled application URL as `DATABASE_URL`. Migrations prefer `DIRECT_URL`, then `DATABASE_URL_UNPOOLED`, then `DATABASE_URL`; for Neon, configure a direct/unpooled URL when the provider supplies one. Never put credentials in source control or share them in logs.
 
 ```dotenv
 DATABASE_PROVIDER="postgresql"
 DATABASE_URL="<provider-pooled-postgresql-url>"
-DIRECT_URL="<provider-direct-postgresql-url>"
+# Optional direct migration connection. For Neon, use either its direct or unpooled URL.
+# DIRECT_URL="<provider-direct-postgresql-url>"
+# DATABASE_URL_UNPOOLED="<provider-unpooled-postgresql-url>"
 BETTER_AUTH_URL="https://<your-production-domain>"
 NEXT_PUBLIC_SITE_URL="https://<your-production-domain>"
 NEXT_PUBLIC_BASE_PATH=""
@@ -57,7 +59,7 @@ SESSION_SECRET="<unique-random-secret-at-least-32-characters>"
 
 `BETTER_AUTH_URL` and `NEXT_PUBLIC_SITE_URL` must be the same HTTPS origin without a path. `SESSION_SECRET` must be unique and at least 32 characters. The root-domain deployment uses an empty base path; the local setting remains `/appointment-app`. Prisma Client generation for both providers runs before `npm run build`.
 
-This baseline is for a new, empty PostgreSQL database. If the chosen database already contains application tables or data, stop and inspect it before running migrations. After PostgreSQL is configured, review the baseline migration and apply it once with `npm run db:deploy` in an environment that has those variables. This applies only to the configured PostgreSQL database; it does not import local SQLite records. Confirm the target before running it. Connect the existing GitHub repository to Vercel and set its environment variables before creating a deployment.
+This baseline is for a new, empty PostgreSQL database. If the chosen database already contains application tables or data, stop and inspect it before running migrations. The deployment script selects the provider-specific schema and migration history, validates provider/URL compatibility, then invokes `prisma migrate deploy`; Vercel does not run migrations automatically during builds. On a verified new, empty database, run `npm run db:deploy` once from a trusted local environment configured for that database, then run it for each reviewed migration before deploying the application version that needs it. Do not run it against a database with unknown contents or migration history. This does not import local SQLite records. `npm run db:deploy -- --validate-only` checks configuration and schema selection without connecting or changing the database. Connect the existing GitHub repository to Vercel and set its environment variables before creating a deployment.
 
 For production builds outside Vercel, set the same variables before building and starting:
 
@@ -89,6 +91,7 @@ The bootstrap command creates the first administrator only; it refuses to run if
 - `npm run db:generate` — regenerate Prisma Client
 - `npm run db:migrate` — create/apply a development migration
 - `npm run db:deploy` — apply checked-in migrations without resetting data
+- `npm run db:deploy -- --validate-only` — validate provider, URLs, and selected schema without connecting to or changing the database
 - `npm run db:studio` — Prisma Studio
 
 The integration test creates a uniquely named database under `tests/` and leaves it in place for inspection. It does not use the configured development database.

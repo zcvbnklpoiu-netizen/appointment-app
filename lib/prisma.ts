@@ -1,40 +1,40 @@
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { attachDatabasePool } from "@vercel/functions";
+import { Pool } from "pg";
 import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaClient as PostgreSqlPrismaClient } from "@/generated/prisma-postgresql/client";
-
-if (process.env.NODE_ENV === "production" && !process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is required in production; configure a persistent database before starting the app.");
-}
-const databaseUrl = process.env.DATABASE_URL ?? "file:./dev.db";
-const configuredProvider = process.env.DATABASE_PROVIDER ?? (databaseUrl.startsWith("postgres") ? "postgresql" : "sqlite");
-if (configuredProvider !== "sqlite" && configuredProvider !== "postgresql") {
-  throw new Error("DATABASE_PROVIDER must be either sqlite or postgresql.");
-}
-const databaseProvider: "sqlite" | "postgresql" = configuredProvider;
+import { resolveDatabaseConfiguration, selectDatabaseProvider } from "@/lib/database-config";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-function createPrismaClient() {
-  if (databaseProvider === "postgresql") {
-    if (!databaseUrl.startsWith("postgres://") && !databaseUrl.startsWith("postgresql://")) {
-      throw new Error("DATABASE_URL must use PostgreSQL when DATABASE_PROVIDER=postgresql.");
-    }
-    const adapter = new PrismaPg({ connectionString: databaseUrl, max: 3 });
+function createPrismaClient(): PrismaClient {
+  const { provider, databaseUrl } = resolveDatabaseConfiguration();
+  if (provider === "postgresql") {
+    const pool = new Pool({ connectionString: databaseUrl, max: 3, idleTimeoutMillis: 5_000 });
+    if (process.env.VERCEL === "1") attachDatabasePool(pool);
+    const adapter = new PrismaPg(pool, { disposeExternalPool: false });
     return new PostgreSqlPrismaClient({ adapter }) as unknown as PrismaClient;
   }
 
-  if (databaseProvider !== "sqlite") {
-    throw new Error("DATABASE_PROVIDER must be either sqlite or postgresql.");
-  }
-  if (!databaseUrl.startsWith("file:")) {
-    throw new Error("DATABASE_URL must use a file: URL when DATABASE_PROVIDER=sqlite.");
-  }
   const adapter = new PrismaBetterSqlite3({ url: databaseUrl });
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
-export const prismaProvider = databaseProvider;
+function getPrismaClient() {
+  globalForPrisma.prisma ??= createPrismaClient();
+  return globalForPrisma.prisma;
+}
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+export function getPrismaProvider() {
+  return selectDatabaseProvider();
+}
+
+// Defer URL validation and client creation until a server operation actually needs Prisma.
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, property) {
+    const client = getPrismaClient();
+    const value = Reflect.get(client, property, client);
+    return typeof value === "function" ? value.bind(client) : value;
+  },
+});

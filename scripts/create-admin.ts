@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { hashPassword } from "better-auth/crypto";
-import { prisma, prismaProvider } from "../lib/prisma";
+import { getPrismaProvider, prisma } from "../lib/prisma";
 
 async function main() {
 const databaseUrl = process.env.DATABASE_URL;
@@ -11,7 +11,7 @@ const password = process.env.ADMIN_PASSWORD;
 if (!databaseUrl || !email || !name || !password) {
   throw new Error("Set DATABASE_URL, ADMIN_EMAIL, ADMIN_NAME, and ADMIN_PASSWORD before running this one-time command.");
 }
-if (process.env.DATABASE_PROVIDER && process.env.DATABASE_PROVIDER !== prismaProvider) {
+if (process.env.DATABASE_PROVIDER && process.env.DATABASE_PROVIDER !== getPrismaProvider()) {
   throw new Error("DATABASE_PROVIDER does not match the configured Prisma client.");
 }
 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254 || name.length < 2 || name.length > 120 || password.length < 12 || password.length > 128) {
