@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function AdminPatients() {
   const [items, setItems] = useState([]); const [query, setQuery] = useState(""); const [error, setError] = useState(""); const [loaded, setLoaded] = useState(false); const [total, setTotal] = useState(0); const [page, setPage] = useState(1);

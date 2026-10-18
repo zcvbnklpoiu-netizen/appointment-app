@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const categories = [["GENERAL_INQUIRY", "General inquiry"], ["COMPLAINT", "Complaint"], ["TECHNICAL_ISSUE", "Technical issue"], ["SUGGESTION", "Suggestion"], ["OTHER", "Other"]];
 const fieldClass = "mt-1 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-teal-700 focus:ring-4 focus:ring-teal-700/10";
 

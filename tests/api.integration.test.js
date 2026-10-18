@@ -34,7 +34,7 @@ test("authentication, authorization, booking conflicts, and patient isolation", 
   const port = 32100 + Math.floor(Math.random() * 1000);
   const origin = `http://127.0.0.1:${port}`;
   const secret = randomUUID() + randomUUID();
-  const env = { ...process.env, DATABASE_URL: databaseUrl, BETTER_AUTH_URL: origin, SESSION_SECRET: secret, NEXT_PUBLIC_BASE_PATH: basePath, PORT: String(port), NODE_ENV: "production" };
+  const env = { ...process.env, DATABASE_PROVIDER: "sqlite", DATABASE_URL: databaseUrl, BETTER_AUTH_URL: origin, NEXT_PUBLIC_SITE_URL: origin, SESSION_SECRET: secret, NEXT_PUBLIC_BASE_PATH: basePath, PORT: String(port), NODE_ENV: "production" };
   new Database(dbFile).close();
   const migrate = startNode(["node_modules/prisma/build/index.js", "migrate", "deploy"], env);
   let migrateOutput = "";

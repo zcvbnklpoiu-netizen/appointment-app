@@ -11,7 +11,7 @@ import {
   isBookableSlot,
 } from "@/lib/availability-calendar";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const fallbackTimeZone = "Asia/Amman";
 const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 

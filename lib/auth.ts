@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "@better-auth/prisma-adapter";
-import { prisma } from "@/lib/prisma";
+import { prisma, prismaProvider } from "@/lib/prisma";
 
 const authUrl = process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
 // Use a process-local random value for development when no secret is configured.
@@ -14,7 +14,7 @@ export const auth = betterAuth({
   // Next.js strips its configured basePath before dispatching a Route Handler.
   basePath: "/api/auth",
   secret: authSecret,
-  database: prismaAdapter(prisma, { provider: "sqlite" }),
+  database: prismaAdapter(prisma, { provider: prismaProvider }),
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 12,

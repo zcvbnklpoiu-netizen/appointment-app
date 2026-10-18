@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const statuses = ["PENDING", "CONFIRMED", "CANCELLED", "COMPLETED", "NO_SHOW"];
 const formatDate = (value, zone) => new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short", timeZone: zone }).format(new Date(value));
 

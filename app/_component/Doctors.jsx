@@ -5,7 +5,7 @@ import Link from "next/link";
 import { doctors as sampleDoctors } from "@/lib/doctor-data";
 import DoctorPortrait from "@/app/_component/DoctorPortrait";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Doctors({ limit, doctorList = sampleDoctors }) {
   const [directory, setDirectory] = useState(() => doctorList.map((doctor) => ({ ...doctor, isDemo: true })));

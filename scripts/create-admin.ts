@@ -1,7 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { hashPassword } from "better-auth/crypto";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import { PrismaClient } from "../generated/prisma/client";
+import { prisma, prismaProvider } from "../lib/prisma";
 
 async function main() {
 const databaseUrl = process.env.DATABASE_URL;
@@ -10,13 +9,15 @@ const name = process.env.ADMIN_NAME?.trim();
 const password = process.env.ADMIN_PASSWORD;
 
 if (!databaseUrl || !email || !name || !password) {
-  throw new Error("Set DATABASE_URL, ADMIN_EMAIL, ADMIN_NAME, and ADMIN_PASSWORD in your ignored .env file before running this one-time command.");
+  throw new Error("Set DATABASE_URL, ADMIN_EMAIL, ADMIN_NAME, and ADMIN_PASSWORD before running this one-time command.");
+}
+if (process.env.DATABASE_PROVIDER && process.env.DATABASE_PROVIDER !== prismaProvider) {
+  throw new Error("DATABASE_PROVIDER does not match the configured Prisma client.");
 }
 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254 || name.length < 2 || name.length > 120 || password.length < 12 || password.length > 128) {
   throw new Error("Use a valid email, a 2–120 character name, and a 12–128 character password.");
 }
 
-const prisma = new PrismaClient({ adapter: new PrismaBetterSqlite3({ url: databaseUrl }) });
 try {
   const userId = randomUUID();
   const hashedPassword = await hashPassword(password);
@@ -30,7 +31,7 @@ try {
     await tx.user.create({ data: { id: userId, email, name, emailVerified: false, role: "ADMIN" } });
     await tx.account.create({ data: { id: randomUUID(), accountId: userId, providerId: "credential", userId, password: hashedPassword } });
   });
-  process.stdout.write(`Administrator account created for ${email}.\n`);
+  process.stdout.write("Administrator account created.\n");
 } finally {
   await prisma.$disconnect();
 }

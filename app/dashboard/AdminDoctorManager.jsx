@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function AdminDoctorManager() {
   const [doctors, setDoctors] = useState([]); const [specialties, setSpecialties] = useState([]); const [query, setQuery] = useState(""); const [selected, setSelected] = useState(""); const [draft, setDraft] = useState(null); const [message, setMessage] = useState(""); const [pending, setPending] = useState(false); const [page, setPage] = useState(1); const [total, setTotal] = useState(0);

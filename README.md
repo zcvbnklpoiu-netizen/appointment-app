@@ -4,9 +4,9 @@ Responsive multi-doctor clinic directory and appointment application built with 
 
 ## Runtime architecture
 
-This project uses the Next.js Node.js server. Static export has been removed because static hosting cannot run the authenticated write APIs, database-backed pages, or appointment transactions. The `/appointment-app` base path remains configurable through `NEXT_PUBLIC_BASE_PATH`; use a Node.js host that supports `next start` (or an equivalent Next.js deployment). The old GitHub Pages demo URL is static and cannot provide the backend.
+This project uses the Next.js Node.js server. Static export has been removed because static hosting cannot run the authenticated write APIs, database-backed pages, or appointment transactions. The app supports a configurable base path. Local development keeps `/appointment-app`; a root-domain deployment leaves `NEXT_PUBLIC_BASE_PATH` empty or unset.
 
-Prisma 7 uses SQLite locally through the BetterSQLite3 driver adapter. SQLite is useful for local development and a single-instance deployment with persistent disk. For multi-instance production, configure a supported shared relational database and matching Prisma adapter/migration setup before scaling; SQLite file storage is not a shared database.
+Prisma 7 supports two database profiles. Local development defaults to SQLite through the BetterSQLite3 driver adapter. Production can use PostgreSQL through `@prisma/adapter-pg`. SQLite and PostgreSQL have separate schemas and migration histories; changing the provider does not copy data between them.
 
 ## Source layout
 
@@ -30,23 +30,43 @@ npm install
 Copy-Item .env.example .env   # PowerShell; on macOS/Linux use: cp .env.example .env
 ```
 
-Edit `.env` and set a unique random `SESSION_SECRET` of at least 32 characters. Keep `.env` private. The example database URL is `file:./dev.db` at the project root.
+Edit `.env` and set a unique random `SESSION_SECRET` of at least 32 characters. Keep `.env` private. The example database URL is `file:./dev.db` at the project root. The example keeps the local `/appointment-app` base path.
 
-Apply the checked-in migrations and start the app:
+Apply the SQLite migrations and start the app:
 
 ```sh
 npm run db:deploy
 npm run dev
 ```
 
-Open `http://localhost:3000/appointment-app`. For production, set `NODE_ENV=production`, `DATABASE_URL`, `BETTER_AUTH_URL`, `SESSION_SECRET`, and the public base path before building and starting:
+Open `http://localhost:3000/appointment-app`.
+
+## Vercel and PostgreSQL preparation
+
+Create or connect a persistent PostgreSQL database in the hosting provider, then configure these Vercel environment variables for each intended environment. Use the provider's pooled URL as `DATABASE_URL` and its direct URL as `DIRECT_URL` when supplied. Never put credentials in source control or share them in logs.
+
+```dotenv
+DATABASE_PROVIDER="postgresql"
+DATABASE_URL="<provider-pooled-postgresql-url>"
+DIRECT_URL="<provider-direct-postgresql-url>"
+BETTER_AUTH_URL="https://<your-production-domain>"
+NEXT_PUBLIC_SITE_URL="https://<your-production-domain>"
+NEXT_PUBLIC_BASE_PATH=""
+SESSION_SECRET="<unique-random-secret-at-least-32-characters>"
+```
+
+`BETTER_AUTH_URL` and `NEXT_PUBLIC_SITE_URL` must be the same HTTPS origin without a path. `SESSION_SECRET` must be unique and at least 32 characters. The root-domain deployment uses an empty base path; the local setting remains `/appointment-app`. Prisma Client generation for both providers runs before `npm run build`.
+
+This baseline is for a new, empty PostgreSQL database. If the chosen database already contains application tables or data, stop and inspect it before running migrations. After PostgreSQL is configured, review the baseline migration and apply it once with `npm run db:deploy` in an environment that has those variables. This applies only to the configured PostgreSQL database; it does not import local SQLite records. Confirm the target before running it. Connect the existing GitHub repository to Vercel and set its environment variables before creating a deployment.
+
+For production builds outside Vercel, set the same variables before building and starting:
 
 ```sh
 npm run build
 npm run start
 ```
 
-Never run `prisma migrate reset` against a database with data. Use `npm run db:migrate` for a development migration, review and commit the resulting migration, then use `npm run db:deploy` in a controlled deployment. Back up production data before applying migrations.
+Never run `prisma migrate reset` against a database with data. Use `npm run db:migrate` for a development migration, review the provider-specific migration folder, then use `npm run db:deploy` in a controlled deployment. Back up production data before applying migrations.
 
 ## Initial administrator and clinic setup
 
@@ -58,7 +78,7 @@ ADMIN_NAME="Clinic Administrator"
 ADMIN_PASSWORD="use-a-unique-password-of-at-least-12-characters"
 ```
 
-The bootstrap command creates the first administrator only; it refuses to run if an administrator already exists and never modifies an existing account. `ADMIN_EMAIL` is the sign-in email and the command prints the email it created. Sign in at `/appointment-app/login`, then create a specialty, create the doctor profile with the practice-supplied details, set weekly availability, and generate future appointment slots. Link a doctor account if that clinician needs the doctor dashboard. Published, future slots are then available to authenticated patients. Patients register through the public registration form. Public sample doctor cards are demonstrations; only database-backed doctor records have bookable slots.
+The bootstrap command creates the first administrator only; it refuses to run if an administrator already exists and never modifies an existing account. `ADMIN_EMAIL` is the sign-in email. Sign in at `/appointment-app/login` locally (or `/login` at the production root), then create a specialty, create the doctor profile with the practice-supplied details, set weekly availability, and generate future appointment slots. Link a doctor account if that clinician needs the doctor dashboard. Published, future slots are then available to authenticated patients. Patients register through the public registration form. Public sample doctor cards are demonstrations; only database-backed doctor records have bookable slots.
 
 ## Available scripts
 

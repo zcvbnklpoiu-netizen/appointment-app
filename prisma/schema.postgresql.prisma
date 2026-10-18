@@ -1,0 +1,254 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma-postgresql"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+enum AppointmentType {
+  IN_PERSON
+  VIDEO
+}
+
+enum SlotStatus {
+  OPEN
+  BOOKED
+  BLOCKED
+}
+
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  name          String
+  emailVerified Boolean      @default(false)
+  image         String?
+  role          String       @default("PATIENT")
+  isActive      Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  patient       Patient?
+  doctor        Doctor?
+  sessions      Session[]
+  accounts      Account[]
+  auditEvents   AuditEvent[] @relation("AuditActor")
+  contactSubmissions ContactSubmission[]
+}
+
+model Patient {
+  id           String        @id @default(cuid())
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phone        String?
+  appointments Appointment[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Specialty {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  doctors     Doctor[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Doctor {
+  id                String               @id @default(cuid())
+  userId            String?              @unique
+  user              User?                @relation(fields: [userId], references: [id], onDelete: SetNull)
+  slug              String               @unique
+  displayName       String
+  professionalTitle String?
+  university        String?
+  biography         String               @default("")
+  qualifications    String               @default("")
+  training          String?
+  subSpecialties    String?
+  services          String?
+  procedures        String?
+  languages         String?
+  procedureCount    Int?
+  practiceStartYear Int?
+  experienceYears   Int                  @default(0)
+  clinicName        String               @default("")
+  location          String               @default("")
+  consultationModes String               @default("IN_PERSON")
+  timeZone          String               @default("Asia/Amman")
+  imageUrl          String               @default("")
+  isActive          Boolean              @default(true)
+  specialtyId       String
+  specialty         Specialty            @relation(fields: [specialtyId], references: [id], onDelete: Restrict)
+  availabilities    DoctorAvailability[]
+  slots             AppointmentSlot[]
+  appointments      Appointment[]
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  @@index([specialtyId, isActive])
+  @@index([isActive, displayName])
+}
+
+model DoctorAvailability {
+  id          String   @id @default(cuid())
+  doctorId    String
+  doctor      Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  weekday     Int
+  startTime   String
+  endTime     String
+  slotMinutes Int      @default(30)
+  timeZone    String   @default("Asia/Amman")
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([doctorId, weekday, startTime])
+  @@index([doctorId, weekday, isActive])
+}
+
+model AppointmentSlot {
+  id           String        @id @default(cuid())
+  doctorId     String
+  doctor       Doctor        @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  startsAt     DateTime
+  endsAt       DateTime
+  timeZone     String        @default("Asia/Amman")
+  status       SlotStatus    @default(OPEN)
+  appointments Appointment[]
+  createdAt    DateTime      @default(now())
+
+  @@unique([doctorId, startsAt])
+  @@index([doctorId, status, startsAt])
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  patientId   String
+  patient     Patient           @relation(fields: [patientId], references: [id], onDelete: Restrict)
+  doctorId    String
+  doctor      Doctor            @relation(fields: [doctorId], references: [id], onDelete: Restrict)
+  slotId      String
+  slot        AppointmentSlot   @relation(fields: [slotId], references: [id], onDelete: Restrict)
+  type        AppointmentType
+  status      AppointmentStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  cancelledAt DateTime?
+
+  @@index([patientId, status, createdAt])
+  @@index([doctorId, status, createdAt])
+}
+
+model Session {
+  id        String   @id
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, expiresAt])
+  @@index([expiresAt])
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+}
+
+model AuditEvent {
+  id         String   @id @default(cuid())
+  actorId    String
+  actor      User     @relation("AuditActor", fields: [actorId], references: [id], onDelete: Restrict)
+  action     String
+  targetType String
+  targetId   String
+  createdAt  DateTime @default(now())
+
+  @@index([actorId, createdAt])
+  @@index([targetType, targetId, createdAt])
+}
+
+enum ContactCategory {
+  GENERAL_INQUIRY
+  COMPLAINT
+  TECHNICAL_ISSUE
+  SUGGESTION
+  OTHER
+}
+
+enum ContactStatus {
+  NEW
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+model ContactSubmission {
+  id          String          @id @default(cuid())
+  reference   String          @unique
+  name        String
+  email       String
+  phone       String?
+  category    ContactCategory
+  subject     String
+  message     String
+  status      ContactStatus   @default(NEW)
+  userId      String?
+  user        User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([status, createdAt])
+  @@index([category, createdAt])
+}
+
+model ContactRateLimit {
+  key         String   @id
+  windowStart DateTime
+  count       Int      @default(0)
+  updatedAt   DateTime @updatedAt
+
+  @@index([windowStart])
+}

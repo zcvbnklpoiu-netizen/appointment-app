@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const labels = { NEW: "New", IN_PROGRESS: "In progress", RESOLVED: "Resolved", CLOSED: "Closed" };
 
 export default function AdminContactManager() {

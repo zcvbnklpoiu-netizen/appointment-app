@@ -13,7 +13,7 @@ export default function DoctorDirectory({ doctors, initialSpecialty = "" }) {
   const specialties = [...new Set(doctors.map((doctor) => doctor.specialty))].sort();
   useEffect(() => {
     let active = true;
-    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app"}/api/doctors`, { cache: "no-store" })
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/doctors`, { cache: "no-store" })
       .then(async (response) => response.ok ? response.json() : null)
       .then((result) => {
         if (!active || !result?.doctors?.length) return;

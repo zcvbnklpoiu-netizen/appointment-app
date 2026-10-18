@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/appointment-app";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function AdminSpecialtyManager() {
   const [items, setItems] = useState([]); const [id, setId] = useState(""); const [draft, setDraft] = useState(null); const [message, setMessage] = useState(""); const [pending, setPending] = useState(false);
