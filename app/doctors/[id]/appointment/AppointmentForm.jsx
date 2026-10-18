@@ -57,6 +57,8 @@ export default function AppointmentForm({ doctorSlug }) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [appointment, setAppointment] = useState(null);
+  const [patientProfile, setPatientProfile] = useState(null);
+  const [step, setStep] = useState("selection");
 
   const timeZone = doctor?.timeZone ?? fallbackTimeZone;
   const consultationModes = doctor?.consultationModes ?? "IN_PERSON";
@@ -70,6 +72,8 @@ export default function AppointmentForm({ doctorSlug }) {
     setSelectedDate(date);
     setSelectedSlotId("");
     setAppointment(null);
+    setPatientProfile(null);
+    setStep("selection");
     setError("");
     setLoadingDay(true);
     try {
@@ -131,6 +135,8 @@ export default function AppointmentForm({ doctorSlug }) {
       setDaySlots(getSlotsForDate(resultSlots, focusDate, result.doctor.timeZone, Date.now()));
       setSelectedSlotId("");
       setAppointment(null);
+      setPatientProfile(null);
+      setStep("selection");
     } catch (loadError) {
       setCalendarSlots([]);
       setDaySlots([]);
@@ -140,12 +146,34 @@ export default function AppointmentForm({ doctorSlug }) {
     }
   }
 
+  async function handleReview() {
+    setError("");
+    if (!selectedSlot || !selectedDate || !["IN_PERSON", "VIDEO"].includes(type)) {
+      setError("Choose an available day, time, and appointment type.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const response = await fetch(`${basePath}/api/me`, { credentials: "include", cache: "no-store" });
+      const result = await response.json();
+      if (!response.ok) throw new Error(response.status === 401 ? "Sign in with a patient account to continue." : result.error ?? "Could not load your patient profile.");
+      if (result.profile?.role !== "PATIENT") throw new Error("Appointment requests require a patient account.");
+      setPatientProfile(result.profile);
+      setStep("review");
+    } catch (reviewError) {
+      setError(reviewError instanceof Error ? reviewError.message : "Could not load your patient profile.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
     setAppointment(null);
-    if (!selectedSlot || !selectedDate || !["IN_PERSON", "VIDEO"].includes(type)) {
-      setError("Choose an available day, time, and appointment type.");
+    if (!selectedSlot || !selectedDate || !patientProfile || step !== "review" || !["IN_PERSON", "VIDEO"].includes(type)) {
+      setError("Review your patient details and select an available appointment before confirming.");
+      setStep("selection");
       return;
     }
     setSubmitting(true);
@@ -160,6 +188,7 @@ export default function AppointmentForm({ doctorSlug }) {
       if (!response.ok) throw new Error(result.error ?? "The appointment could not be saved.");
       setAppointment(result.appointment);
       setSelectedSlotId("");
+      setStep("selection");
       setDaySlots((slots) => slots.map((slot) => slot.id === selectedSlot.id ? { ...slot, status: "BOOKED", isBookable: false } : slot));
       setCalendarSlots((slots) => slots.map((slot) => slot.id === selectedSlot.id ? { ...slot, status: "BOOKED", isBookable: false } : slot));
     } catch (submitError) {
@@ -167,7 +196,7 @@ export default function AppointmentForm({ doctorSlug }) {
       if (selectedDate) {
         try {
           const result = await readAvailability(doctorSlug, selectedDate, addCalendarDays(selectedDate, 1));
-          setDaySlots(getSlotsForDate(result.slots ?? [], selectedDate, result.doctor.timeZone, Date.now()));
+          setDaySlots(getSlotsForDate(result.slots ?? [], selectedDate, result.doctor.timeZone));
           setCalendarSlots((current) => {
             const otherDates = current.filter((slot) => slot.date !== selectedDate);
             return [...otherDates, ...(result.slots ?? [])];
@@ -233,7 +262,7 @@ export default function AppointmentForm({ doctorSlug }) {
               const selected = selectedSlotId === slot.id;
               const status = slot.isPast ? "Past" : slot.status === "BOOKED" ? "Booked" : slot.status === "BLOCKED" ? "Unavailable" : "Available";
               return <label key={slot.id} className={`rounded-xl border px-3 py-3 text-center transition ${bookable ? "cursor-pointer" : "cursor-not-allowed bg-slate-50 text-slate-400"} ${selected ? "border-blue-700 bg-[#EEF2EB] text-[#263F3A] ring-2 ring-blue-100" : "border-slate-200 text-slate-700 hover:border-[#D6C5A7]"}`}>
-                <input className="sr-only" type="radio" name="appointment-slot" value={slot.id} disabled={!bookable || loadingDay} checked={selected} onChange={() => setSelectedSlotId(slot.id)} />
+                <input className="sr-only" type="radio" name="appointment-slot" value={slot.id} disabled={!bookable || loadingDay} checked={selected} onChange={() => { setSelectedSlotId(slot.id); setPatientProfile(null); setStep("selection"); }} />
                 <span className="block text-sm font-semibold">{formatTime(slot.startsAt, slot.timeZone ?? timeZone)}</span>
                 {!bookable && <span className="mt-1 block text-xs">{status}</span>}
               </label>;
@@ -243,11 +272,23 @@ export default function AppointmentForm({ doctorSlug }) {
         {selectedDaySummary && selectedDaySummary.available > 0 && <p className="text-xs text-slate-500" aria-live="polite">{selectedDaySummary.available} times currently open. Availability is checked again when you submit.</p>}
       </section>}
 
-      {daySlots.some((slot) => slot.isBookable === true && slot.status === "OPEN") && <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+      {step === "selection" && daySlots.some((slot) => slot.isBookable === true && slot.status === "OPEN") && <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
         <div><label htmlFor="appointment-type" className="mb-2 block text-sm font-semibold text-slate-700">Appointment type</label><select id="appointment-type" value={type} onChange={(event) => setType(event.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 focus:border-[#344B72] focus:outline-none">{supportsInPerson && <option value="IN_PERSON">In person</option>}{supportsVideo && <option value="VIDEO">Video consultation</option>}</select></div>
         {!selectedSlot && <p className="text-sm text-slate-500">Select an available time to continue.</p>}
-        <button type="submit" disabled={submitting || loadingDay || !selectedSlot} className="w-full rounded-xl bg-[#263F3A] py-3.5 font-bold text-white transition hover:bg-[#1D302D] disabled:cursor-not-allowed disabled:opacity-50">{submitting ? "Saving appointment…" : "Request appointment"}</button>
+        <button type="button" onClick={handleReview} disabled={submitting || loadingDay || !selectedSlot} className="w-full rounded-xl bg-[#263F3A] py-3.5 font-bold text-white transition hover:bg-[#1D302D] disabled:cursor-not-allowed disabled:opacity-50">{submitting ? "Loading your details…" : "Review appointment"}</button>
         <p className="text-xs leading-5 text-slate-500">Booking requires a patient account. The clinic confirms each appointment request.</p>
+      </div>}
+
+      {step === "review" && patientProfile && selectedSlot && <form onSubmit={handleSubmit} className="space-y-5 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+        <div><p className="text-xs font-bold uppercase tracking-wide text-teal-800">Final review</p><h2 className="mt-1 text-xl font-bold text-slate-950">Confirm your appointment request</h2><p className="mt-1 text-sm leading-6 text-slate-600">Review the patient and appointment details before sending the request to the clinic.</p></div>
+        <dl className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl bg-slate-50 p-4"><dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Patient</dt><dd className="mt-1 font-semibold text-slate-900">{patientProfile.name}</dd><dd className="text-sm text-slate-600">{patientProfile.email}</dd>{patientProfile.phone && <dd className="mt-1 text-sm text-slate-600">{patientProfile.phone}</dd>}</div>
+          <div className="rounded-xl bg-slate-50 p-4"><dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Doctor</dt><dd className="mt-1 font-semibold text-slate-900">{doctor.displayName}</dd></div>
+          <div className="rounded-xl bg-slate-50 p-4"><dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Date and time</dt><dd className="mt-1 font-semibold text-slate-900">{new Intl.DateTimeFormat(undefined, { timeZone: selectedSlot.timeZone ?? timeZone, dateStyle: "full", timeStyle: "short" }).format(new Date(selectedSlot.startsAt))}</dd><dd className="text-sm text-slate-600">{selectedSlot.timeZone ?? timeZone}</dd></div>
+          <div className="rounded-xl bg-slate-50 p-4"><dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Appointment type</dt><dd className="mt-1 font-semibold text-slate-900">{type === "VIDEO" ? "Video consultation" : "In person"}</dd></div>
+        </dl>
+        <p className="text-xs leading-5 text-slate-500">These details come from your patient account. Update your name or phone in your dashboard before booking if they need correction.</p>
+        <div className="flex flex-col-reverse gap-3 sm:flex-row"><button type="button" onClick={() => setStep("selection")} disabled={submitting} className="min-h-12 flex-1 rounded-xl border border-slate-300 px-4 py-3 font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-50">Change selection</button><button type="submit" disabled={submitting || loadingDay || !selectedSlot.isBookable} className="min-h-12 flex-1 rounded-xl bg-[#263F3A] px-4 py-3 font-bold text-white transition hover:bg-[#1D302D] disabled:cursor-not-allowed disabled:opacity-50">{submitting ? "Saving appointment…" : "Confirm appointment"}</button></div>
       </form>}
     </>}
   </div>;
